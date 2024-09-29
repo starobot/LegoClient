@@ -121,16 +121,18 @@ public class LegoModule extends AbstractModule {
     @Override
     @SneakyThrows
     public void fromJson(JsonElement element) {
-        JsonObject object = element.getAsJsonObject();
-        String enabled = object.get("Enabled").getAsString();
-        if (Boolean.parseBoolean(enabled)) toggle();
-        getSettings().forEach(setting -> {
-            try {
-                SettingUtil.setValueFromJson(this, setting, object.get(setting.getName()));
-            } catch (Throwable throwable) {
-                log.debug(throwable.getMessage());
-            }
-        });
+        if (element != null) {
+            JsonObject object = element.getAsJsonObject();
+            String enabled = object.get("Enabled").getAsString();
+            if (Boolean.parseBoolean(enabled)) toggle();
+            getSettings().forEach(setting -> {
+                try {
+                    SettingUtil.setValueFromJson(this, setting, object.get(setting.getName()));
+                } catch (Throwable throwable) {
+                    log.debug(throwable.getMessage());
+                }
+            });
+        }
     }
 
     @Override

@@ -65,17 +65,10 @@ public class ConfigCommand extends LegoCommand {
                                 .executes(context -> {
                                     var text = new StringBuilder();
                                     var configs = lego.configManager().getModuleConfigs();
-                                    for (int i = 0; i < configs.size(); i++) {
-                                        text.append(configs.get(i));
-                                        if (i < configs.size() - 1) {
-                                            text.append(", ");
-                                        }
-                                    }
-
+                                    text.append(String.join(", ", configs));
                                     lego.chat().send(Text.literal("")
                                             .append(Text.literal("Config list: ").formatted(Formatting.BOLD).formatted(Formatting.AQUA))
                                             .append(Text.literal(text.toString()).formatted(Formatting.WHITE)));
-
                                     return COMPLETED;
                                 })
                 );
