@@ -22,7 +22,7 @@ public class BindCommand extends LegoCommand {
     }
 
     @Override
-    public void build(Lego lego, LiteralArgumentBuilder<CommandSource> builder) {
+    public void build(LiteralArgumentBuilder<CommandSource> builder) {
         Chat chat = lego.chat();
         builder.then(
                 argument("module", new ModuleArgument(lego)).executes(context -> {

@@ -14,7 +14,7 @@ public class PrefixCommand extends LegoCommand {
     }
 
     @Override
-    public void build(Lego lego, LiteralArgumentBuilder<CommandSource> builder) {
+    public void build(LiteralArgumentBuilder<CommandSource> builder) {
         builder.then(
                 argument("prefix", StringArgument.string())
                         .executes(context -> {
@@ -25,4 +25,5 @@ public class PrefixCommand extends LegoCommand {
                             return COMPLETED;
                         }));
     }
+
 }

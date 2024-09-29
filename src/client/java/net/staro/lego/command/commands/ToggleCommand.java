@@ -13,7 +13,7 @@ public class ToggleCommand extends LegoCommand {
     }
 
     @Override
-    public void build(Lego lego, LiteralArgumentBuilder<CommandSource> builder) {
+    public void build(LiteralArgumentBuilder<CommandSource> builder) {
         builder.then(
                 argument("module", new ModuleArgument(lego))
                         .executes(context -> {

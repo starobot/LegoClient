@@ -14,7 +14,7 @@ public class ModulesCommand extends LegoCommand {
     }
 
     @Override
-    public void build(Lego lego, LiteralArgumentBuilder<CommandSource> builder) {
+    public void build(LiteralArgumentBuilder<CommandSource> builder) {
         builder.executes(context -> {
             lego.chat().sendLogless(Text.of(Formatting.GRAY + "Modules: "));
             lego.moduleManager().getCategories().forEach(category -> lego.moduleManager().getModulesByCategory(category).forEach(module -> {

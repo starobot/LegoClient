@@ -11,14 +11,14 @@ import net.staro.lego.module.Category;
 import net.staro.lego.module.LegoModule;
 
 public class Step extends LegoModule {
-    private final Setting<Float> height = floating("Height", 2, 0, 10);
+    private final Setting<Float> height = floating("Height", 2, 0, 10, "The allowed Step height.");
 
     public Step(Lego lego) {
         super(lego, "Step", Category.MOVEMENT, "Steps up");
     }
 
-    @SafeListener
     @SuppressWarnings("unused")
+    @SafeListener
     public void onStepHeight(StepHeightEvent event) {
         event.setHeight(height.getValue());
     }

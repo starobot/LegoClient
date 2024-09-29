@@ -12,8 +12,8 @@ public class Fullbright extends LegoModule {
         super(lego, "Fullbright", Category.RENDER, "Makes the world bright.");
     }
 
-    @Listener
     @SuppressWarnings("unused")
+    @Listener
     public void onLightmapTexture(LightmapTexture event) {
         event.setColor(0xFFFFFFFF);
     }

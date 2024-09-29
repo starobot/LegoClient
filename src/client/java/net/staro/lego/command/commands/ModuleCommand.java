@@ -4,6 +4,7 @@ import com.google.gson.JsonParser;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import lombok.extern.slf4j.Slf4j;
 import net.minecraft.command.CommandSource;
+import net.minecraft.text.HoverEvent;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.staro.lego.Lego;
@@ -32,7 +33,7 @@ public class ModuleCommand extends LegoCommand {
 
     @Override
     @SuppressWarnings({"rawtypes"})
-    public void build(Lego lego, LiteralArgumentBuilder<CommandSource> builder) {
+    public void build(LiteralArgumentBuilder<CommandSource> builder) {
         builder.then(argument("setting", settingArgument)
                 .executes(context -> {
                     try {
@@ -96,7 +97,13 @@ public class ModuleCommand extends LegoCommand {
                     valueColor = Formatting.OBFUSCATED;
                 }
 
-                lego.chat().send(Text.of(Formatting.GRAY + setting.getName() + ": " + valueColor + value));
+                var settingName = Text.literal(setting.getName()).formatted(Formatting.GRAY);
+                settingName = settingName.styled(style -> style.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
+                        Text.literal(setting.getDescription()))));
+                lego.chat().send(Text.literal("")
+                        .append(settingName)
+                        .append(Text.literal(": "))
+                        .append(Text.literal(value).formatted(valueColor)));
             });
             return COMPLETED;
         });

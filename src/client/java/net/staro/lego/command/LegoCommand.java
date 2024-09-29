@@ -34,7 +34,7 @@ public abstract class LegoCommand implements Command {
 
     public void register(CommandDispatcher<CommandSource> dispatcher) {
         LiteralArgumentBuilder<CommandSource> builder = LiteralArgumentBuilder.literal(name);
-        build(lego, builder);
+        build(builder);
         dispatcher.register(builder);
     }
 

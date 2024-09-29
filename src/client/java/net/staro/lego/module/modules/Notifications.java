@@ -13,8 +13,8 @@ public class Notifications extends LegoModule {
         super(lego, "Notifications", Category.CLIENT, "Shows selected notifications in chat.");
     }
 
-    @SafeListener
     @SuppressWarnings("unused")
+    @SafeListener
     public void onSettingChanged(ToggleEvent event) {
         var module = event.module();
         String message = event.state() ? " enabled." : " disabled.";

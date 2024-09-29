@@ -17,7 +17,7 @@ public class YourCommand extends LegoCommand {
     }
 
     @Override
-    public void build(Lego lego, LiteralArgumentBuilder<CommandSource> builder) {
+    public void build(LiteralArgumentBuilder<CommandSource> builder) {
         builder.executes(context -> { // execute immediately
             // do something
             return COMPLETED;
