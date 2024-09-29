@@ -7,6 +7,7 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.command.CommandSource;
 
@@ -17,16 +18,10 @@ import java.util.concurrent.CompletableFuture;
 public class PlayerArgument implements ArgumentType<String> {
     private final MinecraftClient mc;
 
+    @SneakyThrows
     @Override
     public String parse(StringReader reader) throws CommandSyntaxException {
-        var player = reader.readString();
-        return Objects.requireNonNull(mc.getNetworkHandler())
-                .getPlayerList()
-                .stream()
-                .filter(playerInList -> playerInList.getProfile().getName().equalsIgnoreCase(player))
-                .map(playerInList -> playerInList.getProfile().getName())
-                .findFirst()
-                .orElse(null);
+        return reader.readString();
     }
 
     @Override

@@ -1,6 +1,7 @@
 package net.staro.lego.command.commands;
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import lombok.SneakyThrows;
 import net.minecraft.command.CommandSource;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
@@ -18,6 +19,7 @@ public class FriendCommand extends LegoCommand {
     }
 
     @Override
+    @SneakyThrows
     public void build(LiteralArgumentBuilder<CommandSource> builder) {
         builder.executes(
                 context -> {
@@ -27,7 +29,8 @@ public class FriendCommand extends LegoCommand {
                 literal("add")
                         .then(argument("player", playerArgument)
                                 .executes(context -> {
-                                    var nickname = context.getArgument("player", String.class);
+                                    String nickname;
+                                    nickname = context.getArgument("player", String.class);
                                     if (!lego.friendManager().getFriends().contains(nickname)) {
                                         lego.friendManager().addFriend(nickname);
                                         lego.chat().send(Text.literal("")
@@ -57,17 +60,10 @@ public class FriendCommand extends LegoCommand {
                         .executes(context -> {
                             var friendList = new StringBuilder();
                             var friends = lego.friendManager().getFriends();
-                            for (int i = 0; i < friends.size(); i++) {
-                                friendList.append(friends.get(i));
-                                if (i < friends.size() - 1) {
-                                    friendList.append(", ");
-                                }
-                            }
-
+                            friendList.append(String.join(", ", friends));
                             lego.chat().send(Text.literal("")
                                     .append(Text.literal("Friend list: ").formatted(Formatting.BOLD).formatted(Formatting.AQUA))
                                     .append(Text.literal(friendList.toString()).formatted(Formatting.WHITE)));
-
                             return COMPLETED;
                         })
         ).then(

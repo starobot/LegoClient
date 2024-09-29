@@ -36,16 +36,9 @@ public class ModuleCommand extends LegoCommand {
     public void build(LiteralArgumentBuilder<CommandSource> builder) {
         builder.then(argument("setting", settingArgument)
                 .executes(context -> {
-                    try {
-                        lego.chat().send("nope");
-                    } catch (Exception e) {
-                        log.debug(e.toString());
-                        return COMPLETED;
-                    }
-
+                    lego.chat().send("nope");
                     return COMPLETED;
-                })
-                .then(argument("value", settingValueArgument)
+                }).then(argument("value", settingValueArgument)
                         .executes(context -> {
                             GenericSetting setting = settingArgument.get(context);
                             var settingValue = context.getArgument("value", String.class);
