@@ -83,8 +83,9 @@ public class ModuleCommand extends LegoCommand {
                             return COMPLETED;
                         })));
         builder.executes(context -> {
-            lego.chat().send((module.isEnabled() ? Formatting.AQUA : Formatting.RED) + module.getName() + ": ");
-            lego.chat().send(Formatting.DARK_GRAY + module.getDescription());
+            lego.chat().send(Text.literal((module.isEnabled() ? Formatting.AQUA : Formatting.RED) + module.getName() + ": ")
+                    .styled(style -> style.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
+                            Text.literal(module.getDescription())))));
             List<GenericSetting<?>> filteredSettings = module.getSettings().stream()
                     .filter(setting -> {
                         Predicate<String> settingName = name -> setting.getName().equalsIgnoreCase(name);
