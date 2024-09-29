@@ -11,8 +11,8 @@ public class Heaven extends LegoModule {
         super(lego, "Heaven", Category.RENDER, "Shows you what heave is like.");
     }
 
-    @SafeListener
     @SuppressWarnings("unused")
+    @SafeListener
     public void onCameraUpdate(CameraUpdateEvent event) {
         mc.worldRenderer.reload();
     }

@@ -11,7 +11,7 @@ public class QuitCommand extends LegoCommand {
     }
 
     @Override
-    public void build(Lego lego, LiteralArgumentBuilder<CommandSource> builder) {
+    public void build(LiteralArgumentBuilder<CommandSource> builder) {
         builder.executes(context -> {
             mc.close();
             return COMPLETED;

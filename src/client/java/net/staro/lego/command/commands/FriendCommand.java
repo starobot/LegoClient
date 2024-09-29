@@ -18,7 +18,7 @@ public class FriendCommand extends LegoCommand {
     }
 
     @Override
-    public void build(Lego lego, LiteralArgumentBuilder<CommandSource> builder) {
+    public void build(LiteralArgumentBuilder<CommandSource> builder) {
         builder.executes(
                 context -> {
                     lego.chat().send("Please enter the correct sequence: +player <add/del/list/clear> <nickname>");

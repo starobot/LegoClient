@@ -22,9 +22,9 @@ import java.util.stream.Stream;
 
 @Slf4j
 public class LegoModule extends AbstractModule {
-    private final Setting<Boolean> enabled = bool("Enabled", false);
-    private final Setting<Boolean> drawn = bool("Drawn", true);
-    private final Setting<Bind> bind = bind("Bind", new Bind(Bind.none().getKey()));
+    private final Setting<Boolean> enabled = bool("Enabled", false, "Enables or disables the module.");
+    private final Setting<Boolean> drawn = bool("Drawn", true, "Sets up the visibility of the module.");
+    private final Setting<Bind> bind = bind("Bind", Bind.none(), "Binds the module to a specified key.");
     private final AtomicBoolean atomicEnabled = new AtomicBoolean();
     private final AtomicBoolean atomicDrawn = new AtomicBoolean();
     protected final MinecraftClient mc;
@@ -32,17 +32,6 @@ public class LegoModule extends AbstractModule {
     public LegoModule(Lego lego, String name, Category category, String description) {
         super(lego, name, category, description);
         this.mc = lego.mc();
-    }
-
-    @Override
-    public boolean isDrawn() {
-        atomicDrawn.set(drawn.getValue());
-        return atomicDrawn.get();
-    }
-
-    @Override
-    public void drawn(boolean state) {
-        drawn.setValue(state);
     }
 
     @Override
@@ -55,7 +44,6 @@ public class LegoModule extends AbstractModule {
     public void enable() {
         if (!this.isEnabled()) {
             enabled.setValue(true);
-            onEnable(lego);
             onEnable();
             lego.eventBus().subscribe(this);
         }
@@ -65,7 +53,6 @@ public class LegoModule extends AbstractModule {
     public void disable() {
         if (this.isEnabled()) {
             enabled.setValue(false);
-            onDisable(lego);
             onDisable();
             lego.eventBus().unsubscribe(this);
         }
@@ -81,6 +68,12 @@ public class LegoModule extends AbstractModule {
         }
 
     }
+
+    @Override
+    protected void onEnable() {}
+
+    @Override
+    protected void onDisable() {}
 
     @Override
     public List<GenericSetting<?>> getSettings() {
@@ -106,26 +99,6 @@ public class LegoModule extends AbstractModule {
     public GenericSetting<?> getSettingByName(String name) {
         return getSettings().stream().filter(setting -> setting.getName().equalsIgnoreCase(name))
                 .findFirst().orElse(null);
-    }
-
-    @Override
-    protected void onEnable(Lego lego) {
-
-    }
-
-    @Override
-    protected void onEnable() {
-
-    }
-
-    @Override
-    protected void onDisable(Lego lego) {
-
-    }
-
-    @Override
-    protected void onDisable() {
-
     }
 
     @Override
@@ -168,6 +141,17 @@ public class LegoModule extends AbstractModule {
     @Override
     public Bind getBind() {
         return this.bind.getValue();
+    }
+
+    @Override
+    public boolean isDrawn() {
+        atomicDrawn.set(drawn.getValue());
+        return atomicDrawn.get();
+    }
+
+    @Override
+    public void drawn(boolean state) {
+        drawn.setValue(state);
     }
 
 }

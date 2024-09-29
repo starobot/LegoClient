@@ -18,22 +18,25 @@ public class GenericSetting<T> extends AbstractSetting<T> {
     private T max;
     private boolean hasRestriction;
     private T plannedValue;
+    private final String description;
 
     private Module module;
 
-    public GenericSetting(String name, T defaultValue) {
+    public GenericSetting(String name, T defaultValue, String description) {
         super(name, defaultValue);
         this.name = name;
         this.value = defaultValue;
+        this.description = description;
     }
 
-    public GenericSetting(String name, T defaultValue, T min, T max) {
+    public GenericSetting(String name, T defaultValue, T min, T max, String description) {
         super(name, defaultValue);
         this.name = name;
         this.min = min;
         this.max = max;
         this.value = defaultValue;
         this.hasRestriction = true;
+        this.description = description;
     }
 
     @Override

@@ -39,6 +39,8 @@ public interface Setting<T> extends Nameable {
      */
     T getMax();
 
+    String getDescription();
+
     /**
      * A method used to append a setting to a certain module.
      * @param module requires no explanation.

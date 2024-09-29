@@ -14,8 +14,8 @@ import net.staro.lego.module.LegoModule;
 
 @SuppressWarnings("unused")
 public class Velocity extends LegoModule {
-    private final Setting<Boolean> pushOutOfBlocks = bool("PushOutOfBlocks", true);
-    private final Setting<Boolean> entityPush = bool("EntityPush", true);
+    private final Setting<Boolean> pushOutOfBlocks = bool("PushOutOfBlocks", true, "No push from blocks.");
+    private final Setting<Boolean> entityPush = bool("EntityPush", true, "No push from entities.");
 
     public Velocity(Lego lego) {
         super(lego, "Velocity", Category.MOVEMENT, "Manipulates the velocity");

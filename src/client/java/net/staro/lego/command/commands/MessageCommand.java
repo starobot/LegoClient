@@ -12,7 +12,7 @@ public class MessageCommand extends LegoCommand {
     }
 
     @Override
-    public void build(Lego lego, LiteralArgumentBuilder<CommandSource> builder) {
+    public void build(LiteralArgumentBuilder<CommandSource> builder) {
         builder.then(
                 argument("message", StringArgument.greedyString())
                         .executes(context -> {

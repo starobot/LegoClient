@@ -18,12 +18,11 @@ public class LegoClient implements Client {
 
 		// _______________ Create a lego instance  _______________ //
 		var configManager = new ConfigManager();
-		var moduleManager = new ModuleManager();
 		var lego = new Lego(
 				mc,
 				Lego.EVENT_BUS,
 				new Chat(mc),
-				moduleManager,
+				new ModuleManager(),
 				new CommandManager(),
 				new FriendManager(),
 				new ServiceManager(),

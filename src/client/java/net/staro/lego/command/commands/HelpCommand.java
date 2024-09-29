@@ -13,7 +13,7 @@ public class HelpCommand extends LegoCommand {
     }
 
     @Override
-    public void build(Lego lego, LiteralArgumentBuilder<CommandSource> builder) {
+    public void build(LiteralArgumentBuilder<CommandSource> builder) {
         builder.executes(context -> {
             lego.chat().sendLogless(Text.literal("Available commands:"));
             lego.commandManager().getCommands().forEach(command -> {

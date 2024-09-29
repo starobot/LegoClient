@@ -74,25 +74,15 @@ public class SettingUtil {
     public static void setValueFromJson(Module feature, Setting setting, JsonElement element) {
         String str;
         switch (setting.getType()) {
-            case "Boolean" -> {
-                setting.setValue(element.getAsBoolean());
-            }
-            case "Double" -> {
-                setting.setValue(element.getAsDouble());
-            }
-            case "Float" -> {
-                setting.setValue(element.getAsFloat());
-            }
-            case "Integer" -> {
-                setting.setValue(element.getAsInt());
-            }
+            case "Boolean" -> setting.setValue(element.getAsBoolean());
+            case "Double" -> setting.setValue(element.getAsDouble());
+            case "Float" -> setting.setValue(element.getAsFloat());
+            case "Integer" -> setting.setValue(element.getAsInt());
             case "String" -> {
                 str = element.getAsString();
                 setting.setValue(str.replace("_", " "));
             }
-            case "Bind" -> {
-                setting.setValue(new Bind(element.getAsInt()));
-            }
+            case "Bind" -> setting.setValue(new Bind(element.getAsInt()));
             case "Enum" -> {
                 try {
                     EnumConverter converter = new EnumConverter(((Enum) setting.getValue()).getClass());
@@ -109,9 +99,7 @@ public class SettingUtil {
                     throw new RuntimeException("Invalid color code.");
                 }
             }
-            default -> {
-                log.error("Unknown Setting type for: {} : {}", feature.getName(), setting.getName());
-            }
+            default -> log.error("Unknown Setting type for: {} : {}", feature.getName(), setting.getName());
         }
     }
 

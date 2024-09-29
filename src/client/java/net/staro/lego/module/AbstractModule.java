@@ -14,11 +14,7 @@ public abstract class AbstractModule extends SettingFactoryImpl implements Modul
     private final Category category;
     private final String description;
 
-    protected abstract void onEnable(Lego lego);
-
     protected abstract void onEnable();
-
-    protected abstract void onDisable(Lego lego);
 
     protected abstract void onDisable();
 

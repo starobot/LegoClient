@@ -18,7 +18,7 @@ public class ConfigCommand extends LegoCommand {
     }
 
     @Override
-    public void build(Lego lego, LiteralArgumentBuilder<CommandSource> builder) {
+    public void build(LiteralArgumentBuilder<CommandSource> builder) {
         builder.executes(context -> {
             lego.chat().sendLogless(Text.literal("The command usage is: config <save, load, del, list> <name>"));
             return COMPLETED;
