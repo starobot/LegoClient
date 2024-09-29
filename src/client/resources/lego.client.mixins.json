@@ -1,0 +1,26 @@
+{
+  "required": true,
+  "package": "net.staro.lego.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "MixinMain",
+    "MixinMinecraftClient",
+    "chat.MixinChatHud",
+    "chat.MixinChatInputSuggestor",
+    "client.MixinGameOptions",
+    "client.MixinKeyboard",
+    "entity.MixinClientPlayerEntity",
+    "network.MixinClientPlayNetworkHandler",
+    "render.MixinCamera",
+    "render.MixinLightmapTextureManager"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "mixins": [
+    "entity.MixinEntity",
+    "entity.MixinLivingEntity",
+    "network.IExplosionS2CPacket",
+    "network.MixinClientConnection"
+  ]
+}
