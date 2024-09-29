@@ -17,13 +17,19 @@ public class ModulesCommand extends LegoCommand {
     public void build(LiteralArgumentBuilder<CommandSource> builder) {
         builder.executes(context -> {
             lego.chat().sendLogless(Text.of(Formatting.GRAY + "Modules: "));
-            lego.moduleManager().getCategories().forEach(category -> lego.moduleManager().getModulesByCategory(category).forEach(module -> {
-                var moduleText = Text.literal((module.isEnabled() ? Formatting.AQUA : Formatting.RED) + module.getName() + Formatting.WHITE);
-                lego.chat().send(moduleText.styled(style -> style.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
-                        Text.literal(module.getDescription())))));
-            }));
-
+            lego.moduleManager().getCategories().forEach(category -> {
+                var categoryText = Text.literal(category.getName() + ": ").formatted(Formatting.GRAY);
+                var modulesText = lego.moduleManager().getModulesByCategory(category).stream()
+                        .map(module -> Text.literal(module.getName())
+                                .formatted(module.isEnabled() ? Formatting.AQUA : Formatting.RED)
+                                .styled(style -> style.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
+                                        Text.literal(module.getDescription())))))
+                        .reduce((text1, text2) -> text1.append(Text.literal(", ")).append(text2))
+                        .orElse(Text.literal(""));
+                lego.chat().send(categoryText.append(modulesText));
+            });
             return COMPLETED;
         });
     }
+
 }
