@@ -1,5 +1,6 @@
 # LEGO CLIENT
-An open-source utility client base for making a well written client/mod as fast and easy as possible.
+An open-source utility client base for making a minecraft client/mod as fast and easy as possible.
+This base only supports fabric api.
 ### Make modules
 ```java
 public class YourModule extends LegoModule {
