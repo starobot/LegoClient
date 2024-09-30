@@ -27,7 +27,7 @@ public class YourCommand extends LegoCommand {
 }
 ```
 
-## Why is the Lego class is the argument in everything?
+## Why Lego class is the argument in everything?
 Lego is the record class with all the necessary managers and the eventbus. It serves as an access point for all of them. Whenever you need a manager instance, you can do this:
 ```java
       lego.moduleManager().getModules()
