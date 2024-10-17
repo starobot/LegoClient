@@ -7,9 +7,9 @@ import java.awt.*;
 /**
  * A factory class that handles creating new setting objects.
  * @see Setting
- * @see SettingRegistry
+ * @see SettingManager
  */
-public interface SettingFactory extends SettingRegistry {
+public interface SettingFactory extends SettingManager {
     /**
      * Creates and registers a new Setting object with the boolean value.
      * @param name is the name of the setting.

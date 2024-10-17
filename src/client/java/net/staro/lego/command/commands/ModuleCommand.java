@@ -9,11 +9,14 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.staro.lego.Lego;
 import net.staro.lego.api.Module;
+import net.staro.lego.api.Setting;
+import net.staro.lego.command.Chat;
 import net.staro.lego.command.LegoCommand;
 import net.staro.lego.command.arguments.SettingArgument;
 import net.staro.lego.command.arguments.SettingValueArgument;
 import net.staro.lego.setting.GenericSetting;
 import net.staro.lego.utility.SettingUtil;
+import org.apache.logging.log4j.util.TriConsumer;
 
 import java.util.List;
 import java.util.function.Predicate;
@@ -23,6 +26,15 @@ public class ModuleCommand extends LegoCommand {
     private final Module module;
     private final SettingArgument settingArgument;
     private final SettingValueArgument settingValueArgument;
+    private final TriConsumer<Setting<?>, String, Module> setEnabledModule = (setting, settingValue, module) -> {
+        if (setting.getName().equalsIgnoreCase("Enabled")) {
+            if (settingValue.equalsIgnoreCase("true")) {
+                module.enable();
+            } else if (settingValue.equalsIgnoreCase("false")) {
+                module.disable();
+            }
+        }
+    };
 
     public ModuleCommand(Module module, Lego lego, String name, String description) {
         super(lego, name, description);
@@ -34,49 +46,44 @@ public class ModuleCommand extends LegoCommand {
     @Override
     @SuppressWarnings({"rawtypes"})
     public void build(LiteralArgumentBuilder<CommandSource> builder) {
+        Chat chat = lego.chat();
         builder.then(argument("setting", settingArgument)
                 .executes(context -> {
-                    lego.chat().send("nope");
+                    chat.send("nope");
                     return COMPLETED;
                 }).then(argument("value", settingValueArgument)
                         .executes(context -> {
-                            GenericSetting setting = settingArgument.get(context);
+                            Setting setting = settingArgument.get(context);
                             var settingValue = context.getArgument("value", String.class);
                             if (setting.getName().equalsIgnoreCase("Bind")) {
                                 try {
                                     module.setBind(SettingUtil.convertToBind(settingValue).getKey());
                                 } catch (Exception e) {
-                                    lego.chat().send(Text.literal("")
+                                    chat.send(Text.literal("")
                                             .append(Text.literal("Bad value! There's no key "))
                                             .append(Text.literal(settingValue).formatted(Formatting.RED)));
                                     return COMPLETED;
                                 }
                             } else {
                                 try {
-                                    if (setting.getName().equalsIgnoreCase("Enabled")) {
-                                        if (settingValue.equalsIgnoreCase("true")) {
-                                            module.enable();
-                                        } else if (settingValue.equalsIgnoreCase("false")) {
-                                            module.disable();
-                                        }
-                                    }
-
+                                    setEnabledModule.accept(setting, settingValue, module);
                                     SettingUtil.setCommandValue(module, setting, JsonParser.parseString(settingValue));
                                 } catch (Exception e) {
-                                    lego.chat().send(Text.literal("Bad Value! This setting requires a: "
+                                    chat.send(Text.literal("Bad Value! This setting requires a: "
                                             + setting.getType() + " value."));
                                     return COMPLETED;
                                 }
                             }
 
-                            lego.chat().send(Text.literal("")
-                                    .append(Text.literal(module.getName()).formatted(Formatting.BOLD))
+                            chat.send(Text.literal("")
+                                    .append(Text.literal(module.getName()).formatted(Formatting.BOLD).styled(style ->
+                                            style.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Text.literal(module.getDescription())))))
                                     .append(Text.literal(" " + setting.getName() + " has been set to ").formatted(Formatting.GRAY))
                                     .append(Text.literal(settingValue)));
                             return COMPLETED;
                         })));
         builder.executes(context -> {
-            lego.chat().send(Text.literal((module.isEnabled() ? Formatting.AQUA : Formatting.RED) + module.getName() + ": ")
+            chat.send(Text.literal((module.isEnabled() ? Formatting.AQUA : Formatting.RED) + module.getName() + ": ")
                     .styled(style -> style.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
                             Text.literal(module.getDescription())))));
             List<GenericSetting<?>> filteredSettings = module.getSettings().stream()
@@ -94,7 +101,7 @@ public class ModuleCommand extends LegoCommand {
                 var settingName = Text.literal(setting.getName()).formatted(Formatting.GRAY);
                 settingName = settingName.styled(style -> style.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
                         Text.literal(setting.getDescription()))));
-                lego.chat().send(Text.literal("")
+                chat.send(Text.literal("")
                         .append(settingName)
                         .append(Text.literal(": "))
                         .append(Text.literal(value).formatted(valueColor)));
