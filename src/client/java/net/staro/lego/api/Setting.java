@@ -5,7 +5,7 @@ import net.staro.lego.api.trait.Nameable;
 /**
  * A setting is an object that is linked to {@link Module}.
  * Settings can be created and registered for each module to set its values within the game.
- * @see SettingRegistry
+ * @see SettingManager
  * @param <T>
  */
 public interface Setting<T> extends Nameable {
