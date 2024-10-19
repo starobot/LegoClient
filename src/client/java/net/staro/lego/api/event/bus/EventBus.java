@@ -59,16 +59,13 @@ public class EventBus {
      * @param event The event object.
      */
     public void post(Object event) {
-        removeStaleListeners();
-        if (!listeners.containsKey(event.getClass())) {
-            return;
-        }
-
-        for (EventListener l : listeners.get(event.getClass())) {
-            if (l.getInstance() != null) {
-                Class<?> eventParamType = l.getMethod().getParameterTypes()[0];
-                if (eventParamType.isAssignableFrom(event.getClass())) {
-                    l.invoke(event);
+        if (listeners.containsKey(event.getClass())) {
+            for (EventListener l : listeners.get(event.getClass())) {
+                if (l.getInstance() != null) {
+                    Class<?> eventParamType = l.getMethod().getParameterTypes()[0];
+                    if (eventParamType.isAssignableFrom(event.getClass())) {
+                        l.invoke(event);
+                    }
                 }
             }
         }
@@ -156,13 +153,6 @@ public class EventBus {
         }
 
         return method.getParameters()[0].getType();
-    }
-
-    private void removeStaleListeners() {
-        for (Class<?> eventType : listeners.keySet()) {
-            PriorityQueue<EventListener> queue = listeners.get(eventType);
-            queue.removeIf(l -> l.getInstance() == null);
-        }
     }
 
 }

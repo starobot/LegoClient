@@ -40,13 +40,8 @@ public class EventListener implements Comparable<EventListener> {
 
             return (Consumer<Object>) lambdaFactory.invoke(instance);
         } catch (Throwable throwable) {
-            throw new IllegalStateException("Error creating consumer", throwable);
+            throw new IllegalStateException(throwable.getMessage());
         }
-    }
-
-    @Override
-    public int compareTo(EventListener other) {
-        return Integer.compare(other.getPriority(), this.priority);
     }
 
     /**
@@ -56,6 +51,11 @@ public class EventListener implements Comparable<EventListener> {
      */
     public void invoke(Object event) {
         consumer.accept(event);
+    }
+
+    @Override
+    public int compareTo(EventListener other) {
+        return Integer.compare(other.getPriority(), this.priority);
     }
 
 }
