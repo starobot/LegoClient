@@ -5,7 +5,6 @@ import net.minecraft.network.packet.s2c.play.ExplosionS2CPacket;
 import net.staro.lego.Lego;
 import net.staro.lego.api.Setting;
 import net.staro.lego.api.event.listener.Listener;
-import net.staro.lego.api.event.listener.SafeListener;
 import net.staro.lego.events.CancellableEvent;
 import net.staro.lego.events.PacketEvent;
 import net.staro.lego.mixin.network.IExplosionS2CPacket;
@@ -21,21 +20,14 @@ public class Velocity extends LegoModule {
         super(lego, "Velocity", Category.MOVEMENT, "Manipulates the velocity");
     }
 
-    @SuppressWarnings({"DataFlowIssue"})
-    @SafeListener
-    public void onEntityVelocityUpdateS2CPacket(PacketEvent.Receive event) {
-        var player = mc.player;
-        if (event.getPacket() instanceof EntityVelocityUpdateS2CPacket) {
-            if (((EntityVelocityUpdateS2CPacket) event.getPacket()).getEntityId() == player.getId()) {
-                event.setCancelled(true);
-            }
-        }
-    }
-
     @Listener
     public void onPacketReceived(PacketEvent.Receive event) {
-        if (event.getPacket() instanceof ExplosionS2CPacket) {
-            var explodePacket = ((IExplosionS2CPacket) event.getPacket());
+        if (event.packet instanceof EntityVelocityUpdateS2CPacket) {
+            event.setCancelled(true);
+        }
+
+        if (event.packet instanceof ExplosionS2CPacket p) {
+            var explodePacket = ((IExplosionS2CPacket) p);
             explodePacket.setMotionX(0);
             explodePacket.setMotionY(0);
             explodePacket.setMotionZ(0);
