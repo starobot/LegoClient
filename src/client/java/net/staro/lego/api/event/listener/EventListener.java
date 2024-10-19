@@ -15,7 +15,7 @@ import java.util.function.Consumer;
  * Also, that way we can annotate the listeners with {@code @Listener}
  */
 @Getter
-public class EventListener {
+public class EventListener implements Comparable<EventListener> {
     private final Object instance;
     private final Method method;
     private final int priority;
@@ -40,8 +40,13 @@ public class EventListener {
 
             return (Consumer<Object>) lambdaFactory.invoke(instance);
         } catch (Throwable throwable) {
-            throw new IllegalStateException(throwable.getMessage());
+            throw new IllegalStateException("Error creating consumer", throwable);
         }
+    }
+
+    @Override
+    public int compareTo(EventListener other) {
+        return Integer.compare(other.getPriority(), this.priority);
     }
 
     /**

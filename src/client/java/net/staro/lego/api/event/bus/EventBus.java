@@ -18,7 +18,7 @@ public class EventBus {
     /**
      * A hashmap is used for fast event lookup. Listeners are put into a list based on their event class.
      */
-    private final HashMap<Class<?>, LinkedList<EventListener>> listeners;
+    private final HashMap<Class<?>, PriorityQueue<EventListener>> listeners;
     /**
      * Weak references subscribed objects to the event types they are listening to.
      * This allows an automatic subscription when the object is garbage collected.
@@ -92,7 +92,7 @@ public class EventBus {
     }
 
     public boolean isSubscribed(Object object) {
-        return subscriptions.containsKey(object.getClass());
+        return subscriptions.containsKey(object);
     }
 
     /**
@@ -105,32 +105,18 @@ public class EventBus {
         List<Class<?>> subscribedEvents = subscriptions.computeIfAbsent(instance, k -> new ArrayList<>());
         for (var method : methods) {
             Class<?> eventType = getEventParameterType(method);
-            listeners.putIfAbsent(eventType, new LinkedList<>());
-            LinkedList<EventListener> list = listeners.get(eventType);
+            listeners.putIfAbsent(eventType, new PriorityQueue<>());
+            PriorityQueue<EventListener> queue = listeners.get(eventType);
             for (var annotation : method.getAnnotations()) {
                 if (listenerFactories.containsKey(annotation.annotationType())) {
                     BiFunction<Object, Method, EventListener> factory = listenerFactories.get(annotation.annotationType());
                     EventListener listener = factory.apply(instance, method);
-                    int index = getPriorityIndex(list, listener.getPriority());
-                    list.add(index, listener);
+                    queue.offer(listener);
                     subscribedEvents.add(eventType);
                     break;
                 }
             }
         }
-    }
-
-    private int getPriorityIndex(LinkedList<EventListener> list, int priority) {
-        int index = list.size();
-        Iterator<EventListener> iterator = list.descendingIterator();
-        while (iterator.hasNext()) {
-            if (iterator.next().getPriority() > priority) {
-                break;
-            } else {
-                index--;
-            }
-        }
-        return index;
     }
 
     /**
@@ -142,12 +128,12 @@ public class EventBus {
     private void removeListeners(List<Method> methods, Object instance) {
         for (var method : methods) {
             Class<?> eventType = getEventParameterType(method);
-            LinkedList<EventListener> list = listeners.get(eventType);
-            if (list == null) {
+            PriorityQueue<EventListener> queue = listeners.get(eventType);
+            if (queue == null) {
                 continue;
             }
 
-            list.removeIf(l -> l.getMethod().equals(method) && l.getInstance() == instance);
+            queue.removeIf(l -> l.getMethod().equals(method) && l.getInstance() == instance);
         }
     }
 
@@ -160,6 +146,7 @@ public class EventBus {
                 }
             }
         }
+
         return listening;
     }
 
@@ -171,13 +158,10 @@ public class EventBus {
         return method.getParameters()[0].getType();
     }
 
-    /**
-     * Removes the garbage collected listeners.
-     */
     private void removeStaleListeners() {
         for (Class<?> eventType : listeners.keySet()) {
-            LinkedList<EventListener> list = listeners.get(eventType);
-            list.removeIf(l -> l.getInstance() == null);
+            PriorityQueue<EventListener> queue = listeners.get(eventType);
+            queue.removeIf(l -> l.getInstance() == null);
         }
     }
 
