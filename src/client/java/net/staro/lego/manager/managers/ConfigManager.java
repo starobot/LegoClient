@@ -7,9 +7,9 @@ import com.google.gson.JsonParser;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import net.staro.api.trait.Constants;
+import net.staro.api.trait.Jsonable;
 import net.staro.lego.Lego;
-import net.staro.lego.api.trait.Constants;
-import net.staro.lego.api.trait.Jsonable;
 
 import java.io.File;
 import java.io.IOException;

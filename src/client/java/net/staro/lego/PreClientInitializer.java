@@ -1,8 +1,8 @@
 package net.staro.lego;
 
 import lombok.extern.slf4j.Slf4j;
-import net.staro.lego.api.event.bus.EventBus;
-import net.staro.lego.api.injection.PreClient;
+import net.staro.api.EventBus;
+import net.staro.api.injection.PreClient;
 
 @Slf4j
 public class PreClientInitializer implements PreClient {

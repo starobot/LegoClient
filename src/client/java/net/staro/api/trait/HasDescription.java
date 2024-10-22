@@ -1,4 +1,4 @@
-package net.staro.lego.api.trait;
+package net.staro.api.trait;
 
 /**
  * A trait for something that has a description. Useful to let users know what certain object do.

@@ -2,8 +2,8 @@ package net.staro.lego.module.modules;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.staro.api.annotation.Listener;
 import net.staro.lego.Lego;
-import net.staro.lego.api.event.listener.Listener;
 import net.staro.lego.module.Category;
 import net.staro.lego.module.LegoModule;
 

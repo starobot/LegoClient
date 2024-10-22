@@ -1,8 +1,8 @@
 package net.staro.lego;
 
 import net.minecraft.client.MinecraftClient;
-import net.staro.lego.api.Manager;
-import net.staro.lego.api.event.bus.EventBus;
+import net.staro.api.EventBus;
+import net.staro.api.Manager;
 import net.staro.lego.command.Chat;
 import net.staro.lego.manager.managers.*;
 

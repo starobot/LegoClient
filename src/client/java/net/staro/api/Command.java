@@ -1,12 +1,12 @@
-package net.staro.lego.api;
+package net.staro.api;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.minecraft.command.CommandSource;
-import net.staro.lego.api.trait.Completable;
-import net.staro.lego.api.trait.HasDescription;
-import net.staro.lego.api.trait.IsUsingManagers;
-import net.staro.lego.api.trait.Nameable;
+import net.staro.api.trait.Completable;
+import net.staro.api.trait.HasDescription;
+import net.staro.api.trait.IsUsingManagers;
+import net.staro.api.trait.Nameable;
 
 /**
  * Represents a client's command which can be accessible via minecraft chat by the user.

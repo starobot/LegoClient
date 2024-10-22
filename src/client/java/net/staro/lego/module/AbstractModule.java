@@ -2,8 +2,8 @@ package net.staro.lego.module;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import net.staro.api.Module;
 import net.staro.lego.Lego;
-import net.staro.lego.api.Module;
 import net.staro.lego.setting.SettingFactoryImpl;
 
 @Getter

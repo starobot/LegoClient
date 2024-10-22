@@ -1,4 +1,4 @@
-package net.staro.lego.api.injection;
+package net.staro.api.injection;
 
 import net.minecraft.client.MinecraftClient;
 

@@ -2,7 +2,7 @@ package net.staro.lego.module;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import net.staro.lego.api.trait.Nameable;
+import net.staro.api.trait.Nameable;
 
 @Getter
 @AllArgsConstructor

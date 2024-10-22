@@ -3,7 +3,7 @@ package net.staro.lego.setting;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
-import net.staro.lego.api.Module;
+import net.staro.api.Module;
 import net.staro.lego.setting.type.Bind;
 
 import java.awt.*;

@@ -2,9 +2,9 @@ package net.staro.lego.service.impl;
 
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import lombok.extern.slf4j.Slf4j;
+import net.staro.api.Priority;
+import net.staro.api.annotation.Listener;
 import net.staro.lego.Lego;
-import net.staro.lego.api.event.bus.Priority;
-import net.staro.lego.api.event.listener.Listener;
 import net.staro.lego.events.chat.ChatEvent;
 import net.staro.lego.events.chat.InputSuggestorEvent;
 import net.staro.lego.service.Service;

@@ -1,4 +1,4 @@
-package net.staro.lego.api.trait;
+package net.staro.api.trait;
 
 import net.staro.lego.setting.type.Bind;
 

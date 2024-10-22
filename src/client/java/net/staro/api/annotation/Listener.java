@@ -1,6 +1,6 @@
-package net.staro.lego.api.event.listener;
+package net.staro.api.annotation;
 
-import net.staro.lego.api.event.bus.Priority;
+import net.staro.api.Priority;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface Listener {
+public @interface Listener
+{
     Priority priority() default Priority.DEFAULT;
-
 }

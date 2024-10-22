@@ -1,6 +1,6 @@
-package net.staro.lego.api;
+package net.staro.api;
 
-import net.staro.lego.api.trait.*;
+import net.staro.api.trait.*;
 import net.staro.lego.module.Category;
 
 /**

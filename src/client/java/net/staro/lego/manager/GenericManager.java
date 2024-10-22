@@ -1,8 +1,8 @@
 package net.staro.lego.manager;
 
 import lombok.Getter;
+import net.staro.api.Manager;
 import net.staro.lego.Lego;
-import net.staro.lego.api.Manager;
 
 import java.util.ArrayList;
 import java.util.List;

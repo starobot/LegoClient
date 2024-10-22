@@ -4,7 +4,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.minecraft.client.MinecraftClient;
-import net.staro.lego.api.injection.Client;
+import net.staro.api.injection.Client;
 import net.staro.lego.command.Chat;
 import net.staro.lego.events.client.InitEvent;
 import net.staro.lego.manager.managers.*;

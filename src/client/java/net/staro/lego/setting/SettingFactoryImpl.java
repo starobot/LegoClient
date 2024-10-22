@@ -1,7 +1,7 @@
 package net.staro.lego.setting;
 
-import net.staro.lego.api.Setting;
-import net.staro.lego.api.SettingFactory;
+import net.staro.api.Setting;
+import net.staro.api.SettingFactory;
 import net.staro.lego.setting.settings.*;
 import net.staro.lego.setting.type.Bind;
 

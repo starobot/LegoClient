@@ -1,7 +1,7 @@
 package net.staro.lego.module.modules;
 
+import net.staro.api.annotation.SafeListener;
 import net.staro.lego.Lego;
-import net.staro.lego.api.event.listener.SafeListener;
 import net.staro.lego.events.camera.CameraUpdateEvent;
 import net.staro.lego.module.Category;
 import net.staro.lego.module.LegoModule;
