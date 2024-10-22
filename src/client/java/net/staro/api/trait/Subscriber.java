@@ -1,6 +1,6 @@
-package net.staro.lego.api.trait;
+package net.staro.api.trait;
 
-import net.staro.lego.api.event.bus.EventBus;
+import net.staro.api.EventBus;
 
 // rofl
 public interface Subscriber {

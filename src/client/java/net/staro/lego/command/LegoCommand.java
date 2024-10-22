@@ -7,8 +7,8 @@ import com.mojang.brigadier.builder.RequiredArgumentBuilder;
 import lombok.Getter;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.command.CommandSource;
+import net.staro.api.Command;
 import net.staro.lego.Lego;
-import net.staro.lego.api.Command;
 
 @Getter
 public abstract class LegoCommand implements Command {

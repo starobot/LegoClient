@@ -5,8 +5,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import lombok.Getter;
 import net.minecraft.entity.player.PlayerEntity;
+import net.staro.api.trait.Jsonable;
 import net.staro.lego.Lego;
-import net.staro.lego.api.trait.Jsonable;
 import net.staro.lego.manager.GenericManager;
 
 import java.util.List;

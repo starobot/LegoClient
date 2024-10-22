@@ -1,16 +1,12 @@
-package net.staro.lego.api.event.bus;
-
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+package net.staro.api;
 
 import static java.lang.Integer.MAX_VALUE;
 
 /**
  * Represents the priority of an event listener.
  */
-@Getter
-@RequiredArgsConstructor
-public enum Priority {
+public enum Priority
+{
     HIGHEST(MAX_VALUE),
     HIGH(3),
     MEDIUM(2),
@@ -19,4 +15,13 @@ public enum Priority {
 
     private final int val;
 
+    Priority(int val)
+    {
+        this.val = val;
+    }
+
+    public int getVal()
+    {
+        return val;
+    }
 }

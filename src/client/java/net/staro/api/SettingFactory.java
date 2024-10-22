@@ -1,4 +1,4 @@
-package net.staro.lego.api;
+package net.staro.api;
 
 import net.staro.lego.setting.type.Bind;
 

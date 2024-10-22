@@ -11,9 +11,9 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import net.minecraft.command.CommandSource;
 import net.minecraft.text.Text;
+import net.staro.api.Module;
+import net.staro.api.trait.Nameable;
 import net.staro.lego.Lego;
-import net.staro.lego.api.Module;
-import net.staro.lego.api.trait.Nameable;
 
 import java.util.concurrent.CompletableFuture;
 

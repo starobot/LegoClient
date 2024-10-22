@@ -3,7 +3,7 @@ package net.staro.lego.setting;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import net.staro.lego.api.Setting;
+import net.staro.api.Setting;
 
 @Getter
 @Setter

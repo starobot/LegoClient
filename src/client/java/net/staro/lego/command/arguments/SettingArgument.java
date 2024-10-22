@@ -10,8 +10,8 @@ import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import net.minecraft.command.CommandSource;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
-import net.staro.lego.api.Module;
-import net.staro.lego.api.trait.Nameable;
+import net.staro.api.Module;
+import net.staro.api.trait.Nameable;
 import net.staro.lego.setting.GenericSetting;
 
 import java.util.concurrent.CompletableFuture;

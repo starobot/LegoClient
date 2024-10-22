@@ -1,8 +1,8 @@
 package net.staro.lego.service.impl;
 
+import net.staro.api.Priority;
+import net.staro.api.annotation.Listener;
 import net.staro.lego.Lego;
-import net.staro.lego.api.event.bus.Priority;
-import net.staro.lego.api.event.listener.Listener;
 import net.staro.lego.events.client.ShutdownEvent;
 import net.staro.lego.service.Service;
 

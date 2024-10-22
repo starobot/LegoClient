@@ -1,6 +1,6 @@
-package net.staro.lego.api;
+package net.staro.api;
 
-import net.staro.lego.api.trait.Nameable;
+import net.staro.api.trait.Nameable;
 
 /**
  * A setting is an object that is linked to {@link Module}.

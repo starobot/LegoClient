@@ -1,4 +1,4 @@
-package net.staro.lego.api.injection;
+package net.staro.api.injection;
 
 /**
  * This is for the part of the client which can be initialized before the MinecraftClient itself.
