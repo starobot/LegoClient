@@ -41,19 +41,6 @@ public class CommandManager extends GenericManager<Command> implements Jsonable 
                 registerCommand(new ModuleCommand(module, lego, module.getName(), module.getDescription())));
     }
 
-    public void dispatch(String message) throws CommandSyntaxException {
-        dispatcher.execute(message, commandSource);
-    }
-
-    /**
-     * Initialize a command with this method.
-     * @param command is the command???? I mean, usual stuff, it extends {@link LegoCommand}.
-     */
-    private void registerCommand(Command command) {
-        command.register(dispatcher);
-        register(command);
-    }
-
     @Override
     public JsonElement toJson() {
         JsonObject object = new JsonObject();
@@ -68,6 +55,19 @@ public class CommandManager extends GenericManager<Command> implements Jsonable 
 
     public List<Command> getCommands() {
         return items;
+    }
+
+    public void dispatch(String message) throws CommandSyntaxException {
+        dispatcher.execute(message, commandSource);
+    }
+
+    /**
+     * Initialize a command with this method.
+     * @param command is the command???? I mean, usual stuff, it extends {@link LegoCommand}.
+     */
+    private void registerCommand(Command command) {
+        command.register(dispatcher);
+        register(command);
     }
 
 }

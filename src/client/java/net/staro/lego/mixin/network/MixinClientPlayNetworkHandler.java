@@ -22,17 +22,18 @@ public abstract class MixinClientPlayNetworkHandler {
     @Inject(method = "sendChatMessage", at = @At("HEAD"), cancellable = true)
     private void onSendChatMessage(String message, CallbackInfo ci) {
         if (acceptMessage) {
-            var event = new ChatEvent(message);
+            var event = new ChatEvent();
+            event.setMessage(message);
             Lego.EVENT_BUS.post(event);
             if (event.isCancelled()) {
-                MinecraftClient.getInstance().inGameHud.getChatHud().addToMessageHistory(message);
-                ci.cancel();
+                MinecraftClient.getInstance().inGameHud.getChatHud().addToMessageHistory(event.getMessage());
             } else {
                 acceptMessage = false;
                 sendChatMessage(event.getMessage());
                 acceptMessage = true;
-                ci.cancel();
             }
+
+            ci.cancel();
         }
     }
 

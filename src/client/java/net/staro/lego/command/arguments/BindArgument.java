@@ -50,32 +50,29 @@ public class BindArgument implements ArgumentType<Bind> {
 
     @Override
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
-        return CommandSource.suggestMatching(
-                        ALL_KEY_CODES.stream()
-                                .map(keyCode -> {
-                                    String kn = keyCode > 0 ? GLFW.glfwGetKeyName(keyCode, GLFW.glfwGetKeyScancode(keyCode)) : "None";
-                                    if (kn == null) {
-                                        try {
-                                            for (Field declaredField : GLFW.class.getDeclaredFields()) {
-                                                if (declaredField.getName().startsWith("GLFW_KEY_")) {
-                                                    int a = (int) declaredField.get(null);
+        return CommandSource.suggestMatching(ALL_KEY_CODES.stream().map(this::getKeys).toList(), builder);
+    }
 
-                                                    if (a == keyCode) {
-                                                        String nb = declaredField.getName().substring("GLFW_KEY_".length());
-                                                        kn = nb.substring(0, 1).toUpperCase() + nb.substring(1).toLowerCase();
-                                                    }
-                                                }
-                                            }
-                                        } catch (Exception
-                                                ignore) {
-                                            kn = "unknown." + keyCode;
-                                        }
-                                    }
-                                    return keyCode == -1 ? "None" : Objects.requireNonNull(kn).toUpperCase();
-                                })
-                                .toList(),
-                        builder
-                );
+    private String getKeys(int keyCode) {
+        String kn = keyCode > 0 ? GLFW.glfwGetKeyName(keyCode, GLFW.glfwGetKeyScancode(keyCode)) : "None";
+        if (kn == null) {
+            try {
+                for (Field declaredField : GLFW.class.getDeclaredFields()) {
+                    if (declaredField.getName().startsWith("GLFW_KEY_")) {
+                        int a = (int) declaredField.get(null);
+
+                        if (a == keyCode) {
+                            String nb = declaredField.getName().substring("GLFW_KEY_".length());
+                            kn = nb.substring(0, 1).toUpperCase() + nb.substring(1).toLowerCase();
+                        }
+                    }
+                }
+            } catch (Exception ignore) {
+                kn = "unknown." + keyCode;
+            }
+        }
+
+        return keyCode == -1 ? "None" : Objects.requireNonNull(kn).toUpperCase();
     }
 
 }

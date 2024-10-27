@@ -57,7 +57,7 @@ public class ModuleCommand extends LegoCommand {
                             var settingValue = context.getArgument("value", String.class);
                             if (setting.getName().equalsIgnoreCase("Bind")) {
                                 try {
-                                    module.setBind(SettingUtil.convertToBind(settingValue).getKey());
+                                    module.setBind(SettingUtil.convertToBind(settingValue.toUpperCase()).getKey());
                                 } catch (Exception e) {
                                     chat.send(Text.literal("")
                                             .append(Text.literal("Bad value! There's no key "))

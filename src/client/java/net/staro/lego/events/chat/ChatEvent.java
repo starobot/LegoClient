@@ -1,12 +1,12 @@
 package net.staro.lego.events.chat;
 
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import net.staro.lego.events.CancellableEvent;
 
 @Getter
-@RequiredArgsConstructor
+@Setter
 public class ChatEvent extends CancellableEvent {
-    private final String message;
+    private String message;
 
 }
