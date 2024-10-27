@@ -1,7 +1,7 @@
 {
 	"schemaVersion": 1,
 	"id": "lego",
-	"version": "1.0.0",
+	"version": "1.0.2",
 	"name": "Lego",
 	"description": "A powerful base constructor for your own minecraft client",
 	"authors": [
