@@ -1,7 +1,6 @@
 package net.staro.lego.command.arguments;
 
 import com.mojang.brigadier.StringReader;
-import com.mojang.brigadier.arguments.ArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
@@ -10,14 +9,13 @@ import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import net.minecraft.command.CommandSource;
 import net.minecraft.text.Text;
 import net.staro.lego.Lego;
+import net.staro.lego.command.LegoArgument;
 
 import java.util.concurrent.CompletableFuture;
 
-public class FriendArgument implements ArgumentType<String> {
-    private final Lego lego;
-
+public class FriendArgument extends LegoArgument<String> {
     public FriendArgument(Lego lego) {
-        this.lego = lego;
+        super(lego);
     }
 
     @Override

@@ -15,7 +15,6 @@ import org.lwjgl.glfw.GLFW;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class KeyboardService extends Service {
-    private final Lego lego;
     @Getter
     private final AtomicBoolean listening = new AtomicBoolean();
     @Setter
@@ -23,7 +22,6 @@ public class KeyboardService extends Service {
 
     public KeyboardService(Lego lego) {
         super(lego);
-        this.lego = lego;
     }
 
     @SuppressWarnings("unused")

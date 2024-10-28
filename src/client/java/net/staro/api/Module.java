@@ -7,7 +7,15 @@ import net.staro.lego.module.Category;
  * Represents a module which is the main functional part of the client.
  * Modules are object that could be toggled, bound and written intoJson. Also, modules are the only objects to have settings withing them.
  */
-public interface Module extends Toggleable, Nameable, HasDescription, SettingFactory, IsUsingManagers, Jsonable, Bindable {
+public interface Module extends
+        Toggleable,
+        Nameable,
+        HasDescription,
+        SettingFactory,
+        IsUsingManagers,
+        Jsonable,
+        Bindable
+{
     /**
      * Gets the category of the module.
      * @return a category.

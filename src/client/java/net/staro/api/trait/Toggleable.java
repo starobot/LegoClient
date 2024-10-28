@@ -1,6 +1,7 @@
 package net.staro.api.trait;
 
-public interface Toggleable {
+public interface Toggleable
+{
     boolean isEnabled();
 
     void enable();

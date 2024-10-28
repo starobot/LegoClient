@@ -9,7 +9,8 @@ import java.awt.*;
  * @see Setting
  * @see SettingManager
  */
-public interface SettingFactory extends SettingManager {
+public interface SettingFactory extends SettingManager
+{
     /**
      * Creates and registers a new Setting object with the boolean value.
      * @param name is the name of the setting.

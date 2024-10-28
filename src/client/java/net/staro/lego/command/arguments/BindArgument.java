@@ -19,15 +19,13 @@ import java.util.concurrent.CompletableFuture;
 
 public class BindArgument implements ArgumentType<Bind> {
     public static final List<Integer> ALL_KEY_CODES = Arrays.stream(GLFW.class.getDeclaredFields())
-            .filter(field -> field.getName().startsWith("GLFW_KEY_"))
-            .map(field -> {
+            .filter(field -> field.getName().startsWith("GLFW_KEY_")).map(field -> {
                 try {
                     return field.getInt(null);
                 } catch (IllegalAccessException e) {
                     throw new RuntimeException(e); // This should never happen, I think, but whatever.
                 }
-            })
-            .toList();
+            }).toList();
 
     @Override
     public Bind parse(StringReader reader) throws CommandSyntaxException {
@@ -39,8 +37,7 @@ public class BindArgument implements ArgumentType<Bind> {
                         glfwKeyName = glfwKeyName.substring("GLFW_KEY_".length());
                     }
                     return glfwKeyName != null && glfwKeyName.toUpperCase().equals(keyName);
-                })
-                .findFirst();
+                }).findFirst();
         if (matchingKeyCode.isPresent()) {
             return new Bind(matchingKeyCode.get());
         } else {

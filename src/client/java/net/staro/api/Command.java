@@ -11,7 +11,8 @@ import net.staro.api.trait.Nameable;
 /**
  * Represents a client's command which can be accessible via minecraft chat by the user.
  */
-public interface Command extends Nameable, HasDescription, IsUsingManagers, Completable {
+public interface Command extends Nameable, HasDescription, IsUsingManagers, Completable
+{
     /**
      * A method which allows to execute a sequence of actions whenever the command is entered.
      * @param builder is the mojang brigadier's builder class used to parse and execute the command.

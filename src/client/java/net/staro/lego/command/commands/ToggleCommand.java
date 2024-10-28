@@ -14,13 +14,11 @@ public class ToggleCommand extends LegoCommand {
 
     @Override
     public void build(LiteralArgumentBuilder<CommandSource> builder) {
-        builder.then(
-                argument("module", new ModuleArgument(lego))
-                        .executes(context -> {
-                            Module module = context.getArgument("module", Module.class);
-                            module.toggle();
-                            return COMPLETED;
-                        }));
+        builder.then(argument("module", new ModuleArgument(lego)).executes(context -> {
+            Module module = context.getArgument("module", Module.class);
+            module.toggle();
+            return COMPLETED;
+        }));
     }
 
 }

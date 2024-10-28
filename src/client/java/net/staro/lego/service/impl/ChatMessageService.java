@@ -11,11 +11,8 @@ import net.staro.lego.service.Service;
 
 @Slf4j
 public class ChatMessageService extends Service {
-    private final Lego lego;
-
     public ChatMessageService(Lego lego) {
         super(lego);
-        this.lego = lego;
     }
 
     @SuppressWarnings("unused")

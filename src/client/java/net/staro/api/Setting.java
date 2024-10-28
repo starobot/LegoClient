@@ -8,7 +8,8 @@ import net.staro.api.trait.Nameable;
  * @see SettingManager
  * @param <T>
  */
-public interface Setting<T> extends Nameable {
+public interface Setting<T> extends Nameable
+{
     /**
      * Gets the value of the setting.
      * @return a generic T value.

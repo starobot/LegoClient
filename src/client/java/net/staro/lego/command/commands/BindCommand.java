@@ -24,8 +24,7 @@ public class BindCommand extends LegoCommand {
     @Override
     public void build(LiteralArgumentBuilder<CommandSource> builder) {
         Chat chat = lego.chat();
-        builder.then(
-                argument("module", new ModuleArgument(lego)).executes(context -> {
+        builder.then(argument("module", new ModuleArgument(lego)).executes(context -> {
                     Module module = context.getArgument("module", Module.class);
                     var keyboardService = lego.serviceManager().getKeyboardService();
                     if (module.getBind().getKey() != -1) {
@@ -41,9 +40,7 @@ public class BindCommand extends LegoCommand {
                     keyboardService.setModule(module);
                     keyboardService.getListening().set(true);
                     return COMPLETED;
-                }).then(
-                        argument("key", bindArgument)
-                                .executes(context -> {
+                }).then(argument("key", bindArgument).executes(context -> {
                                     Module module = context.getArgument("module", Module.class);
                                     var key = context.getArgument("key", Bind.class);
                                     if (key.isEmpty()) {
@@ -57,8 +54,7 @@ public class BindCommand extends LegoCommand {
                                             "The bind for " + module.getName().formatted(Formatting.WHITE).formatted(Formatting.BOLD)
                                                     + " has been set to " + module.getBind().getBindName()).formatted(Formatting.GRAY));
                                     return COMPLETED;
-                                }))
-        );
+                                })));
     }
 
 }

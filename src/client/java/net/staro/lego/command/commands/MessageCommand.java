@@ -13,16 +13,14 @@ public class MessageCommand extends LegoCommand {
 
     @Override
     public void build(LiteralArgumentBuilder<CommandSource> builder) {
-        builder.then(
-                argument("message", StringArgument.greedyString())
-                        .executes(context -> {
-                            String message = context.getArgument("message", String.class);
-                            var player = mc.player;
-                            if (player != null) {
-                                lego.chat().sendPlayerMessage(message, player);
-                            }
+        builder.then(argument("message", StringArgument.greedyString()).executes(context -> {
+            String message = context.getArgument("message", String.class);
+            var player = mc.player;
+            if (player != null) {
+                lego.chat().sendPlayerMessage(message, player);
+            }
 
-                            return COMPLETED;
-                        }));
+            return COMPLETED;
+        }));
     }
 }

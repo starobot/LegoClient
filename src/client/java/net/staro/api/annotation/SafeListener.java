@@ -13,7 +13,8 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface SafeListener {
+public @interface SafeListener
+{
     Priority priority() default Priority.DEFAULT;
 
 }

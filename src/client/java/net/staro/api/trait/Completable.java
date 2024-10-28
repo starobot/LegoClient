@@ -3,8 +3,8 @@ package net.staro.api.trait;
 import static com.mojang.brigadier.Command.SINGLE_SUCCESS;
 
 // Why? Because why not.
-// Btw, it literally is equal to 1.
-public interface Completable {
-    int COMPLETED = SINGLE_SUCCESS;
+public interface Completable
+{
+    int COMPLETED = SINGLE_SUCCESS; // this is equal to 1
 
 }
