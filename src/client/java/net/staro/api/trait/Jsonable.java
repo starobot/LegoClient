@@ -5,7 +5,8 @@ import com.google.gson.JsonElement;
 /**
  * A trait for anything that ca be converted to a json object.
  */
-public interface Jsonable {
+public interface Jsonable
+{
     /**
      * Creates a new json object.
      * @return json object as JsonElement.

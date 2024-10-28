@@ -1,10 +1,13 @@
 package net.staro.api;
 
+import lombok.Getter;
+
 import static java.lang.Integer.MAX_VALUE;
 
 /**
  * Represents the priority of an event listener.
  */
+@Getter
 public enum Priority
 {
     HIGHEST(MAX_VALUE),
@@ -20,8 +23,4 @@ public enum Priority
         this.val = val;
     }
 
-    public int getVal()
-    {
-        return val;
-    }
 }

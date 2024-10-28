@@ -5,7 +5,8 @@ import net.staro.lego.Lego;
 /**
  * Represents a manager responsible for creating instances of a certain aspect of the project.
  */
-public interface Manager {
+public interface Manager
+{
     /**
      * Initializes the manager with the provided Lego instance
      *

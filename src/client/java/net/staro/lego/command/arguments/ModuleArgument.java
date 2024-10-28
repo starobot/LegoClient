@@ -1,28 +1,29 @@
 package net.staro.lego.command.arguments;
 
 import com.mojang.brigadier.StringReader;
-import com.mojang.brigadier.arguments.ArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import net.minecraft.command.CommandSource;
 import net.minecraft.text.Text;
 import net.staro.api.Module;
 import net.staro.api.trait.Nameable;
 import net.staro.lego.Lego;
+import net.staro.lego.command.LegoArgument;
 
 import java.util.concurrent.CompletableFuture;
 
 @Getter
-@RequiredArgsConstructor
-public class ModuleArgument implements ArgumentType<Module> {
-    private final Lego lego;
+public class ModuleArgument extends LegoArgument<Module> {
     private static final DynamicCommandExceptionType NO_SUCH_MODULE = new DynamicCommandExceptionType(name ->
             Text.literal("There's no " + name + " try again."));
+
+    public ModuleArgument(Lego lego) {
+        super(lego);
+    }
 
     @Override
     public Module parse(StringReader reader) throws CommandSyntaxException {

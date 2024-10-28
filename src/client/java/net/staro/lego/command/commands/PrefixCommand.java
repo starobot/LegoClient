@@ -15,15 +15,13 @@ public class PrefixCommand extends LegoCommand {
 
     @Override
     public void build(LiteralArgumentBuilder<CommandSource> builder) {
-        builder.then(
-                argument("prefix", StringArgument.string())
-                        .executes(context -> {
-                            var prefix = context.getArgument("prefix", String.class);
-                            lego.commandManager().setPrefix(prefix);
-                            lego.chat().send(Text.literal("The prefix is set to ").formatted(Formatting.BOLD)
-                                    .append(Text.literal(prefix).formatted(Formatting.BOLD).formatted(Formatting.RED)));
-                            return COMPLETED;
-                        }));
+        builder.then(argument("prefix", StringArgument.string()).executes(context -> {
+            var prefix = context.getArgument("prefix", String.class);
+            lego.commandManager().setPrefix(prefix);
+            lego.chat().send(Text.literal("The prefix is set to ").formatted(Formatting.BOLD)
+                    .append(Text.literal(prefix).formatted(Formatting.BOLD).formatted(Formatting.RED)));
+            return COMPLETED;
+        }));
     }
 
 }

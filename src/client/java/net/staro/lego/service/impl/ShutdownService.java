@@ -7,11 +7,8 @@ import net.staro.lego.events.client.ShutdownEvent;
 import net.staro.lego.service.Service;
 
 public class ShutdownService extends Service {
-    private final Lego lego;
-
     public ShutdownService(Lego lego) {
         super(lego);
-        this.lego = lego;
     }
 
     @SuppressWarnings("unused")

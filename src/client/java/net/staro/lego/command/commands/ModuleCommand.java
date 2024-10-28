@@ -47,41 +47,38 @@ public class ModuleCommand extends LegoCommand {
     @SuppressWarnings({"rawtypes"})
     public void build(LiteralArgumentBuilder<CommandSource> builder) {
         Chat chat = lego.chat();
-        builder.then(argument("setting", settingArgument)
-                .executes(context -> {
-                    chat.send("nope");
+        builder.then(argument("setting", settingArgument).executes(context -> {
+            chat.send("nope");
+            return COMPLETED;
+        }).then(argument("value", settingValueArgument).executes(context -> {
+            Setting setting = settingArgument.get(context);
+            var settingValue = context.getArgument("value", String.class);
+            if (setting.getName().equalsIgnoreCase("Bind")) {
+                try {
+                    module.setBind(SettingUtil.convertToBind(settingValue.toUpperCase()).getKey());
+                } catch (Exception e) {
+                    chat.send(Text.literal("")
+                            .append(Text.literal("Bad value! There's no key "))
+                            .append(Text.literal(settingValue).formatted(Formatting.RED)));
                     return COMPLETED;
-                }).then(argument("value", settingValueArgument)
-                        .executes(context -> {
-                            Setting setting = settingArgument.get(context);
-                            var settingValue = context.getArgument("value", String.class);
-                            if (setting.getName().equalsIgnoreCase("Bind")) {
-                                try {
-                                    module.setBind(SettingUtil.convertToBind(settingValue.toUpperCase()).getKey());
-                                } catch (Exception e) {
-                                    chat.send(Text.literal("")
-                                            .append(Text.literal("Bad value! There's no key "))
-                                            .append(Text.literal(settingValue).formatted(Formatting.RED)));
-                                    return COMPLETED;
-                                }
-                            } else {
-                                try {
-                                    setEnabledModule.accept(setting, settingValue, module);
-                                    SettingUtil.setCommandValue(module, setting, JsonParser.parseString(settingValue));
-                                } catch (Exception e) {
-                                    chat.send(Text.literal("Bad Value! This setting requires a: "
-                                            + setting.getType() + " value."));
-                                    return COMPLETED;
-                                }
-                            }
+                }
+            } else {
+                try {
+                    setEnabledModule.accept(setting, settingValue, module);
+                    SettingUtil.setCommandValue(module, setting, JsonParser.parseString(settingValue));
+                } catch (Exception e) {
+                    chat.send(Text.literal("Bad Value! This setting requires a: " + setting.getType() + " value."));
+                    return COMPLETED;
+                }
+            }
 
-                            chat.send(Text.literal("")
-                                    .append(Text.literal(module.getName()).formatted(Formatting.BOLD).styled(style ->
-                                            style.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Text.literal(module.getDescription())))))
-                                    .append(Text.literal(" " + setting.getName() + " has been set to ").formatted(Formatting.GRAY))
-                                    .append(Text.literal(settingValue)));
-                            return COMPLETED;
-                        })));
+            chat.send(Text.literal("")
+                    .append(Text.literal(module.getName()).formatted(Formatting.BOLD).styled(style ->
+                            style.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Text.literal(module.getDescription())))))
+                    .append(Text.literal(" " + setting.getName() + " has been set to ").formatted(Formatting.GRAY))
+                    .append(Text.literal(settingValue)));
+            return COMPLETED;
+        })));
         builder.executes(context -> {
             chat.send(Text.literal((module.isEnabled() ? Formatting.AQUA : Formatting.RED) + module.getName() + ": ")
                     .styled(style -> style.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,

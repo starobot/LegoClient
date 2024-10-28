@@ -6,7 +6,8 @@ import net.minecraft.client.MinecraftClient;
 import java.io.File;
 import java.nio.file.Path;
 
-public interface Constants {
+public interface Constants
+{
     // ________ CLIENT NAME AND VERSION MAYBE????? ________ //
     String NAME = "Lego";
     String NAME_TO_LOWER_CASE = NAME.toLowerCase();
