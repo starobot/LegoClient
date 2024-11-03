@@ -12,7 +12,6 @@ public interface Module extends
         Nameable,
         HasDescription,
         SettingFactory,
-        IsUsingManagers,
         Jsonable,
         Bindable
 {

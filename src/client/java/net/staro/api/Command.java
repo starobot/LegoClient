@@ -5,13 +5,12 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.minecraft.command.CommandSource;
 import net.staro.api.trait.Completable;
 import net.staro.api.trait.HasDescription;
-import net.staro.api.trait.IsUsingManagers;
 import net.staro.api.trait.Nameable;
 
 /**
  * Represents a client's command which can be accessible via minecraft chat by the user.
  */
-public interface Command extends Nameable, HasDescription, IsUsingManagers, Completable
+public interface Command extends Nameable, HasDescription, Completable
 {
     /**
      * A method which allows to execute a sequence of actions whenever the command is entered.
