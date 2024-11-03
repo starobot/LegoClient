@@ -6,9 +6,11 @@ import net.minecraft.util.crash.CrashReport;
 import net.staro.lego.Lego;
 import net.staro.lego.LegoClient;
 import net.staro.lego.events.client.ShutdownEvent;
+import net.staro.lego.events.tick.GameloopEvent;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.io.File;
@@ -23,6 +25,13 @@ public abstract class MixinMinecraftClient {
 	@Inject(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/MinecraftClient;setOverlay(Lnet/minecraft/client/gui/screen/Overlay;)V"))
 	public void initializeClientHook(RunArgs args, CallbackInfo ci) {
 		new LegoClient().onInitializeClient(MinecraftClient.class.cast(this));
+	}
+
+	@ModifyVariable(method = "render", ordinal = 0, at = @At(value = "INVOKE", target = "Lnet/minecraft/client/MinecraftClient;runTasks()V", shift = At.Shift.AFTER))
+	private int runTickHook(int i) {
+		GameloopEvent.INSTANCE.setTicks(i);
+		Lego.EVENT_BUS.post(GameloopEvent.INSTANCE);
+		return GameloopEvent.INSTANCE.getTicks();
 	}
 
 	@Inject(method = "stop", at = @At("HEAD"))
