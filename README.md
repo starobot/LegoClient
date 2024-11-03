@@ -1,4 +1,7 @@
 # LEGO CLIENT
+[![CodeFactor](https://www.codefactor.io/repository/github/starobot/legoclient/badge)](https://www.codefactor.io/repository/github/starobot/legoclient)
+[![](https://tokei.rs/b1/github/starobot/LegoClient)](https://github.com/starobot/LegoClient)
+
 An open-source utility client base for making a minecraft client/mod as fast and easy as possible.
 This base only supports fabric api.
 ### Make modules
