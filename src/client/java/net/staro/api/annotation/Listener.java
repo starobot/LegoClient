@@ -9,7 +9,6 @@ import java.lang.annotation.Target;
 
 /**
  * Annotation to mark methods as event listeners.
- * The methods are required to be public.
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)

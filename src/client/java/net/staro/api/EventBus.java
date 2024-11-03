@@ -8,6 +8,7 @@ import net.staro.api.listener.SafeEventListener;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.BiFunction;
 
 /**
@@ -19,12 +20,11 @@ public class EventBus
     /**
      * A hashmap is used for fast event lookup. Listeners are put into a list based on their event class.
      */
-    private final Map<Class<?>, PriorityQueue<EventListener>> listeners = new HashMap<>();
+    private final Map<Class<?>, List<EventListener>> listeners = new HashMap<>();
     /**
-     * Weak references subscribed objects to the event types they are listening to.
-     * This allows an automatic unsubscription when the object is garbage collected.
+     * Allows an automatic unsubscription when the object is garbage collected.
      */
-    private final Map<Object, List<Class<?>>> subscriptions = new WeakHashMap<>();
+    private final Map<Object, List<Class<?>>> subscriptions = new HashMap<>();
     /**
      * Stores factory functions for creating listeners based on their annotations.
      */
@@ -32,19 +32,15 @@ public class EventBus
 
     public EventBus()
     {
-        registerListenerFactory(Listener.class, (instance, method) ->
-                new EventListener(instance, method, method.getAnnotation(Listener.class).priority().getVal()));
-        registerListenerFactory(SafeListener.class, (instance, method) ->
-                new SafeEventListener(instance, method, method.getAnnotation(SafeListener.class).priority().getVal()));
+        registerListenerFactory(Listener.class, (instance, method) -> new EventListener(instance, method, method.getAnnotation(Listener.class).priority().getVal()));
+        registerListenerFactory(SafeListener.class, (instance, method) -> new SafeEventListener(instance, method, method.getAnnotation(SafeListener.class).priority().getVal()));
     }
 
     /**
      * Registers a factory function for creating a specific type of listener based on its annotation.
-     * The current Library provides {@link EventListener}.
-     * For creating more listeners either implement {@link java.util.EventListener} or extend {@link EventListener} and register them in the constructor with this method.
      *
      * @param annotationType The annotation class associated with the listener type.
-     * @param factory The function that creates the listener instance given the object and method.
+     * @param factory        The function that creates the listener instance given the object and method.
      */
     public void registerListenerFactory(Class<? extends Annotation> annotationType, BiFunction<Object, Method, EventListener> factory)
     {
@@ -52,23 +48,19 @@ public class EventBus
     }
 
     /**
-     * Posts an event to all registered listeners.
+     * Posts (dispatches) an event to all registered listeners.
+     *
      * @param event The event object.
      */
     public void post(Object event)
     {
-        if (!listeners.containsKey(event.getClass()))
+        List<EventListener> listeners = this.listeners.get(event.getClass());
+        if (listeners == null)
         {
             return;
         }
 
-        List<EventListener> snapshot;
-        synchronized (listeners)
-        {
-            snapshot = new ArrayList<>(listeners.get(event.getClass()));
-        }
-
-        for (EventListener l : snapshot)
+        for (EventListener l : listeners)
         {
             if (l.getInstance() == null)
             {
@@ -84,8 +76,9 @@ public class EventBus
     }
 
     /**
-     * Subscribes listeners.
-     * @param instance is a listener.
+     * Registers a listener instance to the event bus.
+     *
+     * @param instance is the listener to subscribe (register).
      */
     public void subscribe(Object instance)
     {
@@ -93,8 +86,9 @@ public class EventBus
     }
 
     /**
-     * Unsubscribes listeners.
-     * @param instance is a listener.
+     * Unregisters a listener instance from the event bus, so the events are not being dispatched to it.
+     *
+     * @param instance is the listener to unsubscribe (unregister).
      */
     public void unsubscribe(Object instance)
     {
@@ -103,8 +97,10 @@ public class EventBus
     }
 
     /**
-     * @param instance is a listener.
-     * @return true if the listener is subscribed and false otherwise.
+     * Checks if a listener instance is subscribed (registered) to the event bus.
+     *
+     * @param instance The instance to check.
+     * @return True if the instance is subscribed, false otherwise.
      */
     public boolean isSubscribed(Object instance)
     {
@@ -123,15 +119,16 @@ public class EventBus
         for (Method method : methods)
         {
             Class<?> eventType = getEventParameterType(method);
-            listeners.putIfAbsent(eventType, new PriorityQueue<>());
-            PriorityQueue<EventListener> queue = listeners.get(eventType);
+            listeners.putIfAbsent(eventType, new CopyOnWriteArrayList<>());
+            List<EventListener> list = listeners.get(eventType);
             for (Annotation annotation : method.getAnnotations())
             {
                 if (listenerFactories.containsKey(annotation.annotationType()))
                 {
                     BiFunction<Object, Method, EventListener> factory = listenerFactories.get(annotation.annotationType());
                     EventListener listener = factory.apply(instance, method);
-                    queue.offer(listener);
+                    list.add(listener);
+                    list.sort(Comparator.comparingInt(EventListener::getPriority).reversed());
                     subscribedEvents.add(eventType);
                     break;
                 }
@@ -150,13 +147,13 @@ public class EventBus
         for (Method method : methods)
         {
             Class<?> eventType = getEventParameterType(method);
-            PriorityQueue<EventListener> queue = listeners.get(eventType);
-            if (queue == null)
+            List<EventListener> list = listeners.get(eventType);
+            if (list == null)
             {
                 continue;
             }
 
-            queue.removeIf(l -> l.getMethod().equals(method) && l.getInstance() == instance);
+            list.removeIf(l -> l.getMethod().equals(method) && l.getInstance() == instance);
         }
     }
 
@@ -188,3 +185,4 @@ public class EventBus
     }
 
 }
+
