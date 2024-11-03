@@ -4,7 +4,7 @@ import net.staro.api.trait.Jsonable;
 import net.staro.lego.Lego;
 import net.staro.lego.manager.GenericManager;
 
-//TODO: honestly, this is retarded, but I cba to rewrite config system atm.
+//honestly, this is retarded, but I cba to rewrite config system atm.
 public class JsonableManager extends GenericManager<Jsonable> {
     @Override
     public void initialize(Lego lego) {
